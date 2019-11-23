@@ -4,12 +4,12 @@ use std::str;
 extern crate log;
 extern crate env_logger;
 
-fn fold(text: &str, lnlen: u8) -> String {
+fn fold(text: &str, lnlen: u32) -> String {
     let mut result = Vec::new();
-    let mut buflen: u8;
+    let mut buflen: u32;
     let mut word = Vec::new();
-    let mut wordlen: u8;
-    let mut wordno: u8; // word order number
+    let mut wordlen: u32;
+    let mut wordno: u32; // word order number
     let mut word_after_ch;
     // get line_ending
     // if text contains "\r\n", then line_ending will be "\r\n",
@@ -55,7 +55,7 @@ fn fold(text: &str, lnlen: u8) -> String {
                 "WORD{:?}\tWAC {:?}\tBL {}\tWNO {}",
                 word, word_after_ch, buflen, wordno
             );
-            wordlen = word.len() as u8;
+            wordlen = word.len() as u32;
             match buflen {
                 bl if bl + wordlen <= lnlen => {
                     result.append(&mut word);
@@ -127,13 +127,13 @@ fn main() -> std::io::Result<()> {
 
     let args: Vec<String> = env::args().collect();
     if args.len() < 3 {
-        println!("Bad command.\nfoldcn <input filename> <output filename> (<line length>).\n");
+        println!("This program is developed by Nemo<sum.nemo@outlook.com> in 2019.\nUsage:\nfoldcn <input filename> <output filename> (<line length>).\n");
         return Ok(());
     } else {
         let filename_input = &args[1];
         let filename_output = &args[2];
         let line_length = match &args {
-            ag if ag.len() >= 4 => match ag[3].parse::<u8>() {
+            ag if ag.len() >= 4 => match ag[3].parse::<u32>() {
                 Ok(n) => n,
                 Err(_) => {
                     println!("Bad line length. Set default to 80.");
