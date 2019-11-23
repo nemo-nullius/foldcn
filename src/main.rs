@@ -127,7 +127,7 @@ fn main() -> std::io::Result<()> {
 
     let args: Vec<String> = env::args().collect();
     if args.len() < 3 {
-        debug!("Bad command.\nfoldcn <input filename> <output filename> (<line length>).\n");
+        println!("Bad command.\nfoldcn <input filename> <output filename> (<line length>).\n");
         return Ok(());
     } else {
         let filename_input = &args[1];
@@ -136,12 +136,12 @@ fn main() -> std::io::Result<()> {
             ag if ag.len() >= 4 => match ag[3].parse::<u8>() {
                 Ok(n) => n,
                 Err(_) => {
-                    debug!("Bad line length. Set default to 80.");
+                    println!("Bad line length. Set default to 80.");
                     80
                 }
             },
             _ => {
-                debug!("Line length not set. Set default to 80.");
+                println!("Line length not set. Set default to 80.");
                 80
             }
         };
